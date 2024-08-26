@@ -24,6 +24,8 @@ private:
 	Expr* ParseUnary();
 	Expr* Primary();
 	Expr* Assignment();
+	Expr* Or();
+	Expr* And();
 	Token Consume(const TokenType type, const std::string& message);
 	bool Match(const std::vector<TokenType>& types);
 	bool Check(const TokenType type) const;

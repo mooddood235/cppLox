@@ -148,7 +148,7 @@ Expr* Parser::Primary(){
 }
 
 Expr* Parser::Assignment(){
-	Expr* expr = Equality();
+	Expr* expr = Or();
 
 	if (Match({ EQUAL })) {
 		Token equals = Previous();
@@ -158,6 +158,28 @@ Expr* Parser::Assignment(){
 		if (variable) return new Assign(variable->name, value);
 		
 		Error(equals, "Invalid assignment target.");
+	}
+	return expr;
+}
+
+Expr* Parser::Or(){
+	Expr* expr = And();
+
+	while (Match({ OR })) {
+		Token op = Previous();
+		Expr* right = And();
+		expr = new Logical(expr, op, right);
+	}
+	return expr;
+}
+
+Expr* Parser::And(){
+	Expr* expr = Equality();
+
+	while (Match({ AND })) {
+		Token op = Previous();
+		Expr* right = Equality();
+		expr = new Logical(expr, op, right);
 	}
 	return expr;
 }

@@ -17,6 +17,7 @@ private:
 	std::any VisitGrouping(const Grouping* groupingExpr) override;
 	std::any VisitVariable(const Variable* variableExpr) override;
 	std::any VisitAssign(const Assign* assignExpr) override;
+	std::any VisitLogical(const Logical* logicalExpr) override;
 
 	std::any Evaluate(const Expr* expr) ;
 	bool IsTruthy(const std::any& value) const;

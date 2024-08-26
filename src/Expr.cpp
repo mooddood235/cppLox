@@ -80,3 +80,18 @@ std::any Assign::Accept(ExprVisitor<std::any>* visitor) const{
 Assign::~Assign(){
 	delete value;
 }
+
+Logical::Logical(Expr* left, Token op, Expr* right){
+	this->left = left;
+	this->op = op;
+	this->right = right;
+}
+
+std::any Logical::Accept(ExprVisitor<std::any>* visitor) const{
+	return visitor->VisitLogical(this);
+}
+
+Logical::~Logical(){
+	delete left;
+	delete right;
+}

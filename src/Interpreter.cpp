@@ -166,6 +166,18 @@ void Interpreter::ExecuteBlock(const std::vector<Stmt*> stmts, const Environment
     this->environment = previous;
 }
 
+std::any Interpreter::VisitLogical(const Logical* logicalExpr){
+    std::any left = Evaluate(logicalExpr->left);
+
+    if (logicalExpr->op.type == OR) {
+        if (IsTruthy(left)) return left;
+    }
+    else {
+        if (!IsTruthy(left)) return left;
+    }
+    return Evaluate(logicalExpr->right);
+}
+
 void Interpreter::VisitIfStmt(const If* ifStmt){
     if (IsTruthy(Evaluate(ifStmt->conditional))) Execute(ifStmt->thenBranch);
     else if (ifStmt->elseBranch) Execute(ifStmt->elseBranch);

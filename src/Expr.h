@@ -65,3 +65,11 @@ public:
 	Expr* value;
 	~Assign();
 };
+struct Logical :Expr {
+	Logical(Expr* left, Token op, Expr* right);
+	std::any Accept(ExprVisitor<std::any>* visitor) const override;
+	Expr* left;
+	Token op;
+	Expr* right;
+	~Logical();
+};
