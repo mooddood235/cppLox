@@ -34,3 +34,12 @@ public:
 	void Accept(StmtVisitor<void>* visitor) const override;
 	std::vector<Stmt*> stmts = std::vector<Stmt*>();
 };
+struct If : Stmt {
+public:
+	If(Expr* conditional, Stmt* thenBranch, Stmt* elseBranch);
+	void Accept(StmtVisitor<void>* visitor) const override;
+	Expr* conditional;
+	Stmt* thenBranch;
+	Stmt* elseBranch;
+
+};

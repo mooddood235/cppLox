@@ -29,6 +29,7 @@ private:
 	void VisitPrintStmt(const Print* printStmt)  override;
 	void VisitVarStmt(const Var* varStmt) override;
 	void VisitBlockStmt(const Block* blockStmt)  override;
+	void VisitIfStmt(const If* ifStmt) override;
 
 	void Execute(const Stmt* stmt);
 	void ExecuteBlock(const std::vector<Stmt*> stmts, const Environment& environment) ;

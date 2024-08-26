@@ -166,6 +166,11 @@ void Interpreter::ExecuteBlock(const std::vector<Stmt*> stmts, const Environment
     this->environment = previous;
 }
 
+void Interpreter::VisitIfStmt(const If* ifStmt){
+    if (IsTruthy(Evaluate(ifStmt->conditional))) Execute(ifStmt->thenBranch);
+    else if (ifStmt->elseBranch) Execute(ifStmt->elseBranch);
+}
+
 void Interpreter::VisitBlockStmt(const Block* blockStmt) {
     ExecuteBlock(blockStmt->stmts, new Environment(environment));
 }

@@ -33,13 +33,27 @@ Stmt* Parser::Decleration(){
 	}
 }
 Stmt* Parser::Statement(){
+	if (Match({ IF })) return IfStatement();
 	if (Match({ PRINT })) return PrintStatement();
+	if (Match({ LEFT_BRACE })) return new Block(ParseBlock());
 	return ExpressionStatement();
 }
 Stmt* Parser::PrintStatement(){
 	Expr* expr = Expression();
 	Consume(SEMICOLON, "Expect ';' after value.");
 	return new Print(expr);
+}
+Stmt* Parser::IfStatement(){
+	Consume(LEFT_PAREN, "Expect '(' after 'if'.");
+	Expr* condition = Expression();
+	Consume(RIGHT_PAREN, "Expect ')' after if condition.");
+
+	Stmt* thenBranch = Statement();
+	Stmt* elseBranch = nullptr;
+
+	if (Match({ ELSE })) elseBranch = Statement();
+
+	return new If(condition, thenBranch, elseBranch);
 }
 Stmt* Parser::ExpressionStatement(){
 	Expr* expr = Expression();

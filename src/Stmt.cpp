@@ -38,3 +38,13 @@ Block::Block(const std::vector<Stmt*>& stmts){
 void Block::Accept(StmtVisitor<void>* visitor) const{
 	visitor->VisitBlockStmt(this);
 }
+
+If::If(Expr* conditional, Stmt* thenBranch, Stmt* elseBranch){
+	this->conditional = conditional;
+	this->thenBranch = thenBranch;
+	this->elseBranch = elseBranch;
+}
+
+void If::Accept(StmtVisitor<void>* visitor) const{
+	visitor->VisitIfStmt(this);
+}

@@ -13,6 +13,7 @@ private:
 	Stmt* Decleration();
 	Stmt* Statement();
 	Stmt* PrintStatement();
+	Stmt* IfStatement();
 	Stmt* ExpressionStatement();
 	std::vector<Stmt*> ParseBlock();
 	Expr* Expression();
