@@ -48,3 +48,12 @@ If::If(Expr* conditional, Stmt* thenBranch, Stmt* elseBranch){
 void If::Accept(StmtVisitor<void>* visitor) const{
 	visitor->VisitIfStmt(this);
 }
+
+While::While(Expr* condition, Stmt* body){
+	this->condition = condition;
+	this->body = body;
+}
+
+void While::Accept(StmtVisitor<void>* visitor) const{
+	visitor->VisitWhileStmt(this);
+}

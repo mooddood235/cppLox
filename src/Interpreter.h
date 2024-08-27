@@ -31,11 +31,12 @@ private:
 	void VisitVarStmt(const Var* varStmt) override;
 	void VisitBlockStmt(const Block* blockStmt)  override;
 	void VisitIfStmt(const If* ifStmt) override;
+	void VisitWhileStmt(const While* whileStmt) override;
 
 	void Execute(const Stmt* stmt);
-	void ExecuteBlock(const std::vector<Stmt*> stmts, const Environment& environment) ;
+	void ExecuteBlock(const std::vector<Stmt*> stmts, Environment* environment) ;
 private:
-	Environment environment = Environment();
+	Environment* environment = new Environment();
 };
 struct RuntimeError {
 public:

@@ -78,12 +78,12 @@ std::any Interpreter::VisitGrouping(const Grouping* groupingExpr) {
 }
 
 std::any Interpreter::VisitVariable(const Variable* variableExpr) {
-    return environment.Get(variableExpr->name);
+    return environment->Get(variableExpr->name);
 }
 
 std::any Interpreter::VisitAssign(const Assign* assignExpr) {
     std::any value = Evaluate(assignExpr->value);
-    environment.Assign(assignExpr->name, value);
+    environment->Assign(assignExpr->name, value);
     return value;
 }
 
@@ -147,15 +147,15 @@ void Interpreter::VisitPrintStmt(const Print* printStmt) {
 void Interpreter::VisitVarStmt(const Var* varStmt) {
     std::any value = std::any();
     if (varStmt->initializer) value = Evaluate(varStmt->initializer);
-    environment.Define(varStmt->name.lexeme, value);
+    environment->Define(varStmt->name.lexeme, value);
 }
 
 void Interpreter::Execute(const Stmt* stmt) {
     stmt->Accept(this);
 }
 
-void Interpreter::ExecuteBlock(const std::vector<Stmt*> stmts, const Environment& environment) {
-    Environment previous = this->environment;
+void Interpreter::ExecuteBlock(const std::vector<Stmt*> stmts, Environment* environment) {
+    Environment* previous = this->environment;
     try {
         this->environment = environment;
         for (const Stmt* stmt : stmts) Execute(stmt);
@@ -181,6 +181,12 @@ std::any Interpreter::VisitLogical(const Logical* logicalExpr){
 void Interpreter::VisitIfStmt(const If* ifStmt){
     if (IsTruthy(Evaluate(ifStmt->conditional))) Execute(ifStmt->thenBranch);
     else if (ifStmt->elseBranch) Execute(ifStmt->elseBranch);
+}
+
+void Interpreter::VisitWhileStmt(const While* whileStmt){
+    while (IsTruthy(Evaluate(whileStmt->condition))) {
+        Execute(whileStmt->body);
+    } 
 }
 
 void Interpreter::VisitBlockStmt(const Block* blockStmt) {

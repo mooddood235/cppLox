@@ -35,6 +35,7 @@ Stmt* Parser::Decleration(){
 Stmt* Parser::Statement(){
 	if (Match({ IF })) return IfStatement();
 	if (Match({ PRINT })) return PrintStatement();
+	if (Match({ WHILE })) return WhileStatement();
 	if (Match({ LEFT_BRACE })) return new Block(ParseBlock());
 	return ExpressionStatement();
 }
@@ -59,6 +60,16 @@ Stmt* Parser::ExpressionStatement(){
 	Expr* expr = Expression();
 	Consume(SEMICOLON, "Expect ';' after expression.");
 	return new ExprStmt(expr);
+}
+Stmt* Parser::WhileStatement(){
+	Consume(LEFT_PAREN, "Expect '(' after 'while'.");
+	Expr* condition = Expression();
+	Consume(RIGHT_PAREN, "Expect '(' after condition.");
+
+	Stmt* body = Statement();
+
+	return new While(condition, body);
+
 }
 std::vector<Stmt*> Parser::ParseBlock(){
 	std::vector<Stmt*> stmts = std::vector<Stmt*>();

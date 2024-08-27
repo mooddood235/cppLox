@@ -43,3 +43,10 @@ public:
 	Stmt* elseBranch;
 
 };
+struct While : Stmt {
+public:
+	While(Expr* condition, Stmt* body);
+	void Accept(StmtVisitor<void>* visitor) const override;
+	Expr* condition;
+	Stmt* body;
+};
