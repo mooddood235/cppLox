@@ -36,6 +36,7 @@ Stmt* Parser::Statement(){
 	if (Match({ IF })) return IfStatement();
 	if (Match({ PRINT })) return PrintStatement();
 	if (Match({ WHILE })) return WhileStatement();
+	if (Match({ FOR })) return ForStatement();
 	if (Match({ LEFT_BRACE })) return new Block(ParseBlock());
 	return ExpressionStatement();
 }
@@ -70,6 +71,33 @@ Stmt* Parser::WhileStatement(){
 
 	return new While(condition, body);
 
+}
+Stmt* Parser::ForStatement(){
+	Consume(LEFT_PAREN, "Expect '(' after 'for'.");
+
+	Stmt* initializer;
+	if (Match({ SEMICOLON })) initializer = nullptr;
+	else if (Match({ VAR })) initializer = VarDecleration();
+	else initializer = ExpressionStatement();
+
+	Expr* condition = nullptr;
+	if (!Check(SEMICOLON)) condition = Expression();
+	Consume(SEMICOLON, "Expect ';' after loop condition.");
+
+	Expr* increment = nullptr;
+	if (!Check(RIGHT_PAREN)) increment = Expression();
+	Consume(RIGHT_PAREN, "Expect ')' after for clauses.");
+
+	Stmt* body = Statement();
+	
+	if (increment) body = new Block({ body, new ExprStmt(increment) });
+	if (!condition) condition = new Literal(true);
+	
+	body = new While(condition, body);
+
+	if (initializer) body = new Block({ initializer, body });
+
+	return body;
 }
 std::vector<Stmt*> Parser::ParseBlock(){
 	std::vector<Stmt*> stmts = std::vector<Stmt*>();

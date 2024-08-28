@@ -16,6 +16,7 @@ private:
 	Stmt* IfStatement();
 	Stmt* ExpressionStatement();
 	Stmt* WhileStatement();
+	Stmt* ForStatement();
 	std::vector<Stmt*> ParseBlock();
 	Expr* Expression();
 	Expr* Equality();
