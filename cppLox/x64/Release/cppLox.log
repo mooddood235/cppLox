@@ -1,9 +1,6 @@
-﻿  Parser.cpp
-C:\Users\qumah\Desktop\cppLox\src\Parser.cpp(30,20): warning C4101: 'error': unreferenced local variable
-  cppLox.cpp
-  Generating code
-  23 of 1190 functions ( 1.9%) were compiled, the rest were copied from previous compilation.
-    21 functions were new in current compilation
-    166 functions had inline decision re-evaluated but remain unchanged
+﻿  Generating code
+  1 of 1190 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    10 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   cppLox.vcxproj -> C:\Users\qumah\Desktop\cppLox\x64\Release\cppLox.exe

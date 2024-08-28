@@ -53,7 +53,13 @@ std::any Interpreter::VisitBinary(const Binary* binaryExpr) {
         if (left.type() == typeid(std::string) && right.type() == typeid(std::string)) {
             return std::any_cast<std::string>(left) + std::any_cast<std::string>(right);
         }
-        throw RuntimeError(binaryExpr->op, "Operands must be two numbers or two strings.");
+        if (left.type() == typeid(double) && right.type() == typeid(std::string)) {
+            return std::to_string(std::any_cast<double>(left)) + std::any_cast<std::string>(right);
+        }
+        if (left.type() == typeid(std::string) && right.type() == typeid(double)) {
+            return std::any_cast<std::string>(left) + std::to_string(std::any_cast<double>(right));
+        }
+        throw RuntimeError(binaryExpr->op, "Operands must be numbers or strings.");
     case GREATER:
         CheckNumberOperands(binaryExpr->op, left, right);
         return std::any_cast<double>(left) > std::any_cast<double>(right);
