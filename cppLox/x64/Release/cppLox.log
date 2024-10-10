@@ -1,15 +1,7 @@
-﻿  Environment.cpp
-  Expr.cpp
-  Interpreter.cpp
-  Parser.cpp
-C:\Users\qumah\Desktop\cppLox\src\Parser.cpp(30,20): warning C4101: 'error': unreferenced local variable
-  Scanner.cpp
-  Stmt.cpp
-  Token.cpp
-  TokenType.cpp
-  cppLox.cpp
+﻿  Interpreter.cpp
+  LoxCallable.cpp
   Generating code
-  0 of 1190 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+  0 of 1312 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

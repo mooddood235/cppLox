@@ -7,6 +7,7 @@ struct Literal;
 struct Variable;
 struct Assign;
 struct Logical;
+struct Call;
 
 template <typename T> 
 class ExprVisitor {
@@ -18,4 +19,5 @@ public:
 	virtual T VisitVariable(const Variable* variableExpr) = 0;
 	virtual T VisitAssign(const Assign* assignExpr) = 0;
 	virtual T VisitLogical(const Logical* logicalExpr) = 0;
+	virtual T VisitCall(const Call* callExpr) = 0;
 };

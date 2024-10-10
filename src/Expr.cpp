@@ -101,6 +101,9 @@ Call::Call(Expr* callee, const Token& paren, const std::vector<Expr*>& arguments
 	this->paren = paren;
 	this->arguments = arguments;
 }
+std::any Call::Accept(ExprVisitor<std::any>* visitor) const{
+	return visitor->VisitCall(this);
+}
 Call::~Call() {
 	delete callee;
 	for (const Expr* arg : arguments) delete arg;

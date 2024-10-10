@@ -18,6 +18,7 @@ private:
 	std::any VisitVariable(const Variable* variableExpr) override;
 	std::any VisitAssign(const Assign* assignExpr) override;
 	std::any VisitLogical(const Logical* logicalExpr) override;
+	std::any VisitCall(const Call* callExpr) override;
 
 	std::any Evaluate(const Expr* expr) ;
 	bool IsTruthy(const std::any& value) const;
@@ -37,6 +38,7 @@ private:
 	void ExecuteBlock(const std::vector<Stmt*> stmts, Environment* environment) ;
 private:
 	Environment* environment = new Environment();
+
 };
 struct RuntimeError {
 public:

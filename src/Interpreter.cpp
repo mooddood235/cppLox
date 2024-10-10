@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include "cppLox.h"
+#include "LoxCallable.h"
 
 
 void Interpreter::Interpret(const std::vector<Stmt*>& stmts) {
@@ -170,6 +171,19 @@ void Interpreter::ExecuteBlock(const std::vector<Stmt*> stmts, Environment* envi
         std::cerr << "Error in ExecuteBlock(): " << e.what() << std::endl;
     }
     this->environment = previous;
+}
+
+std::any Interpreter::VisitCall(const Call* callExpr){
+    std::any callee = Evaluate(callExpr->callee);
+
+    std::vector<std::any> arguments = std::vector<std::any>();
+    arguments.reserve(callExpr->arguments.size());
+
+    for (const Expr* arg : callExpr->arguments) {
+        arguments.push_back(Evaluate(arg));
+    }
+    LoxCallable function = std::any_cast<LoxCallable>(callee);
+    return function.Call(this, arguments);
 }
 
 std::any Interpreter::VisitLogical(const Logical* logicalExpr){

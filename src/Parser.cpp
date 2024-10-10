@@ -238,6 +238,7 @@ Expr* Parser::FinishCall(Expr* callee){
 
 	if (!Check(RIGHT_PAREN)) {
 		do {
+			if (arguments.size() >= 255) Error(Peek(), "Can't have more than 255 arguments.");
 			arguments.push_back(Expression());
 		} while (Match({ COMMA }));
 	}

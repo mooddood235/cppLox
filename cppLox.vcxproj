@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClCompile Include="src\Environment.cpp" />
     <ClCompile Include="src\Interpreter.cpp" />
+    <ClCompile Include="src\LoxCallable.cpp" />
     <ClCompile Include="src\Parser.cpp" />
     <ClCompile Include="src\Expr.cpp" />
     <ClCompile Include="src\Scanner.cpp" />
@@ -140,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Environment.h" />
+    <ClInclude Include="src\LoxCallable.h" />
     <ClInclude Include="src\StmtVisitor.h" />
     <ClInclude Include="src\Interpreter.h" />
     <ClInclude Include="src\Parser.h" />
