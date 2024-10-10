@@ -28,6 +28,8 @@ private:
 	Expr* Assignment();
 	Expr* Or();
 	Expr* And();
+	Expr* ParseCall();
+	Expr* FinishCall(Expr* callee);
 	Token Consume(const TokenType type, const std::string& message);
 	bool Match(const std::vector<TokenType>& types);
 	bool Check(const TokenType type) const;

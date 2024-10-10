@@ -81,7 +81,7 @@ Assign::~Assign(){
 	delete value;
 }
 
-Logical::Logical(Expr* left, Token op, Expr* right){
+Logical::Logical(Expr* left, const Token& op, Expr* right){
 	this->left = left;
 	this->op = op;
 	this->right = right;
@@ -94,4 +94,14 @@ std::any Logical::Accept(ExprVisitor<std::any>* visitor) const{
 Logical::~Logical(){
 	delete left;
 	delete right;
+}
+
+Call::Call(Expr* callee, const Token& paren, const std::vector<Expr*>& arguments){
+	this->callee = callee;
+	this->paren = paren;
+	this->arguments = arguments;
+}
+Call::~Call() {
+	delete callee;
+	for (const Expr* arg : arguments) delete arg;
 }

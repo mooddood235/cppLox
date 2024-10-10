@@ -159,7 +159,7 @@ Expr* Parser::ParseUnary(){
 		Expr* right = ParseUnary();
 		return new Unary(op, right);
 	}
-	return Primary();
+	return ParseCall();
 }
 
 Expr* Parser::Primary(){
@@ -221,6 +221,28 @@ Expr* Parser::And(){
 		expr = new Logical(expr, op, right);
 	}
 	return expr;
+}
+
+Expr* Parser::ParseCall(){
+	Expr* expr = Primary();
+
+	while (true) {
+		if (Match({ LEFT_PAREN })) expr = FinishCall(expr);
+		else break;
+	}
+	return expr;
+}
+
+Expr* Parser::FinishCall(Expr* callee){
+	std::vector<Expr*> arguments = std::vector<Expr*>();
+
+	if (!Check(RIGHT_PAREN)) {
+		do {
+			arguments.push_back(Expression());
+		} while (Match({ COMMA }));
+	}
+	Token paren = Consume(RIGHT_PAREN, "Expect ')' after arguments.");
+	return new Call(callee, paren, arguments);
 }
 
 Token Parser::Consume(const TokenType type, const std::string& message){

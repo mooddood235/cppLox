@@ -65,11 +65,19 @@ public:
 	Expr* value;
 	~Assign();
 };
-struct Logical :Expr {
-	Logical(Expr* left, Token op, Expr* right);
+struct Logical : Expr {
+	Logical(Expr* left, const Token& op, Expr* right);
 	std::any Accept(ExprVisitor<std::any>* visitor) const override;
 	Expr* left;
 	Token op;
 	Expr* right;
 	~Logical();
+};
+struct Call : Expr {
+	Call(Expr* callee, const Token& paren, const std::vector<Expr*>& arguments);
+	std::any Accept(ExprVisitor<std::any>* visitor) const override;
+	Expr* callee;
+	Token paren;
+	std::vector<Expr*> arguments;
+	~Call();
 };
