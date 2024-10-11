@@ -2,9 +2,18 @@
 #include "TokenType.h"
 #include <string>
 #include <iostream>
+#include <format>
 #include "cppLox.h"
-#include "LoxCallable.h"
+#include "ClockNative.h"
 
+class LoxCallable;
+
+Interpreter::Interpreter(){
+    globals = new Environment();
+    globals->Define("clock", (LoxCallable*)(new ClockNative()));
+
+    environment = new Environment(*globals);
+}
 
 void Interpreter::Interpret(const std::vector<Stmt*>& stmts) {
     try {
@@ -178,12 +187,19 @@ std::any Interpreter::VisitCall(const Call* callExpr){
 
     std::vector<std::any> arguments = std::vector<std::any>();
     arguments.reserve(callExpr->arguments.size());
-
-    for (const Expr* arg : callExpr->arguments) {
-        arguments.push_back(Evaluate(arg));
+    for (const Expr* arg : callExpr->arguments) arguments.push_back(Evaluate(arg));
+    
+    if (!callee.has_value() || callee.type() != typeid(LoxCallable*)) {
+        throw RuntimeError(callExpr->paren, "Can only call functions and classes.");
     }
-    LoxCallable function = std::any_cast<LoxCallable>(callee);
-    return function.Call(this, arguments);
+    LoxCallable* function = std::any_cast<LoxCallable*>(callee);
+    
+    if (arguments.size() != function->Arity()) {
+        throw RuntimeError(callExpr->paren, 
+            std::format("Expected {} arguments but got {}.",
+                function->Arity(), arguments.size()));
+    }
+    return function->Call(this, arguments);
 }
 
 std::any Interpreter::VisitLogical(const Logical* logicalExpr){

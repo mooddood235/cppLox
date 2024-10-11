@@ -7,6 +7,7 @@
 class Environment{
 public:
 	Environment();
+	Environment(const Environment& other);
 	Environment(Environment* enclosing);
 	void Define(const std::string& name, const std::any& value);
 	void Assign(const Token& name, const std::any& value);

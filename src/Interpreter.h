@@ -9,6 +9,7 @@
 
 class Interpreter : ExprVisitor<std::any>, StmtVisitor<void>{
 public:
+	Interpreter();
 	void Interpret(const std::vector<Stmt*>& stmts);
 private:
 	std::any VisitLiteral(const Literal* literalExpr) override;
@@ -37,8 +38,8 @@ private:
 	void Execute(const Stmt* stmt);
 	void ExecuteBlock(const std::vector<Stmt*> stmts, Environment* environment) ;
 private:
-	Environment* environment = new Environment();
-
+	Environment* globals = nullptr;
+	Environment* environment = nullptr;
 };
 struct RuntimeError {
 public:

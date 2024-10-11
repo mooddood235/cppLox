@@ -5,6 +5,12 @@ Environment::Environment(){
 	enclosing = nullptr;
 }
 
+Environment::Environment(const Environment& other){
+	this->values = other.values;
+	if (other.enclosing) this->enclosing = new Environment(*other.enclosing);
+	else this->enclosing = nullptr;
+}
+
 Environment::Environment(Environment* enclosing){
 	this->enclosing = enclosing;
 }
