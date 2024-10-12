@@ -17,6 +17,7 @@ private:
 	Stmt* ExpressionStatement();
 	Stmt* WhileStatement();
 	Stmt* ForStatement();
+	Function* ParseFunction(const std::string& kind);
 	std::vector<Stmt*> ParseBlock();
 	Expr* Expression();
 	Expr* Equality();

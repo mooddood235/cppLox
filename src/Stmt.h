@@ -25,6 +25,7 @@ struct Var : Stmt {
 public:
 	void Accept(StmtVisitor<void>* visitor) const override;
 	Var(const Token& name, Expr* initializer);
+	~Var();
 	Token name;
 	Expr* initializer;
 };
@@ -33,6 +34,7 @@ public:
 	Block(const std::vector<Stmt*>& stmts);
 	void Accept(StmtVisitor<void>* visitor) const override;
 	std::vector<Stmt*> stmts = std::vector<Stmt*>();
+	~Block();
 };
 struct If : Stmt {
 public:
@@ -41,6 +43,7 @@ public:
 	Expr* conditional;
 	Stmt* thenBranch;
 	Stmt* elseBranch;
+	~If();
 
 };
 struct While : Stmt {
@@ -49,4 +52,15 @@ public:
 	void Accept(StmtVisitor<void>* visitor) const override;
 	Expr* condition;
 	Stmt* body;
+	~While();
+};
+struct Function : Stmt {
+	Function();
+	Function(const Token& name, const std::vector<Token> params,
+		const std::vector<Stmt*> body);
+	void Accept(StmtVisitor<void>* visitor) const override;
+	Token name;
+	std::vector<Token> params;
+	std::vector<Stmt*> body;
+	~Function();
 };

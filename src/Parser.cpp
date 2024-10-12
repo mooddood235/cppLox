@@ -1,6 +1,7 @@
 #include "Parser.h"
 #include "TokenType.h"
 #include "cppLox.h"
+#include <format>
 
 Parser::Parser(const std::vector<Token>& tokens) {
 	this->tokens = tokens;
@@ -23,6 +24,7 @@ Stmt* Parser::VarDecleration(){
 }
 Stmt* Parser::Decleration(){
 	try {
+		if (Match({ FUN })) return ParseFunction("function");
 		if (Match({ VAR })) return VarDecleration();
 		if (Match({ LEFT_BRACE })) return new Block(ParseBlock());
 		return Statement();
@@ -98,6 +100,23 @@ Stmt* Parser::ForStatement(){
 	if (initializer) body = new Block({ initializer, body });
 
 	return body;
+}
+Function* Parser::ParseFunction(const std::string& kind){
+	Token name = Consume(IDENTIFIER, std::format("Expect {} name.", kind));
+	Consume(LEFT_PAREN, std::format("Expect '(' after {} name.", kind));
+	std::vector<Token> parameters = std::vector<Token>();
+	if (!Check(RIGHT_PAREN)) {
+		do {
+			if (parameters.size() >= 255) {
+				Error(Peek(), "Can't have more than 255 parameters.");
+			}
+			parameters.push_back(Consume(IDENTIFIER, "Expect parameter name."));
+		} while (Match({ COMMA }));
+	}
+	Consume(RIGHT_PAREN, "Expect ')' after parameters.");
+	Consume(LEFT_BRACE, "Expect '{' before " + kind + " body.");
+	std::vector<Stmt*> body = ParseBlock();
+	return new Function(name, parameters, body);
 }
 std::vector<Stmt*> Parser::ParseBlock(){
 	std::vector<Stmt*> stmts = std::vector<Stmt*>();

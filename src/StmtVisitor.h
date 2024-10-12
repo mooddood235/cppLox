@@ -6,6 +6,7 @@ struct Var;
 struct Block;
 struct If;
 struct While;
+struct Function;
 
 template <typename T>
 class StmtVisitor {
@@ -16,4 +17,5 @@ public:
 	virtual T VisitBlockStmt(const Block* blockStmt)  = 0;
 	virtual T VisitIfStmt(const If* ifStmt) = 0;
 	virtual T VisitWhileStmt(const While* whileStmt) = 0;
+	virtual T VisitFunctionStmt(const Function* functionStmt) = 0;
 };

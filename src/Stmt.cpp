@@ -31,12 +31,20 @@ Var::Var(const Token& name, Expr* initializer) {
 	this->initializer = initializer;
 }
 
+Var::~Var(){
+	delete initializer;
+}
+
 Block::Block(const std::vector<Stmt*>& stmts){
 	this->stmts = stmts;
 }
 
 void Block::Accept(StmtVisitor<void>* visitor) const{
 	visitor->VisitBlockStmt(this);
+}
+
+Block::~Block(){
+	for (const Stmt* stmt : stmts) delete stmt;
 }
 
 If::If(Expr* conditional, Stmt* thenBranch, Stmt* elseBranch){
@@ -49,6 +57,12 @@ void If::Accept(StmtVisitor<void>* visitor) const{
 	visitor->VisitIfStmt(this);
 }
 
+If::~If(){
+	delete conditional;
+	delete elseBranch;
+	delete elseBranch;
+}
+
 While::While(Expr* condition, Stmt* body){
 	this->condition = condition;
 	this->body = body;
@@ -56,4 +70,26 @@ While::While(Expr* condition, Stmt* body){
 
 void While::Accept(StmtVisitor<void>* visitor) const{
 	visitor->VisitWhileStmt(this);
+}
+
+While::~While(){
+	delete body;
+	delete condition;
+}
+
+Function::Function(){
+}
+
+Function::Function(const Token& name, const std::vector<Token> params, const std::vector<Stmt*> body){
+	this->name = name;
+	this->params = params;
+	this->body = body;
+}
+
+void Function::Accept(StmtVisitor<void>* visitor) const{
+	visitor->VisitFunctionStmt(this);
+}
+
+Function::~Function(){
+	for (const Stmt* stmt : body) delete stmt;
 }

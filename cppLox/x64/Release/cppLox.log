@@ -1,7 +1,11 @@
-﻿  Interpreter.cpp
+﻿  LoxFunction.cpp
+C:\Users\qumah\Desktop\cppLox\src\LoxFunction.cpp(18,33): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  ClockNative.cpp
+  Interpreter.cpp
+  LoxCallable.cpp
   Generating code
-  15 of 2005 functions ( 0.7%) were compiled, the rest were copied from previous compilation.
-    6 functions were new in current compilation
-    4 functions had inline decision re-evaluated but remain unchanged
+  102 of 2029 functions ( 5.0%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
+    64 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   cppLox.vcxproj -> C:\Users\qumah\Desktop\cppLox\x64\Release\cppLox.exe

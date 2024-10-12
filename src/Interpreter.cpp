@@ -5,6 +5,7 @@
 #include <format>
 #include "cppLox.h"
 #include "ClockNative.h"
+#include "LoxFunction.h"
 
 class LoxCallable;
 
@@ -223,6 +224,11 @@ void Interpreter::VisitWhileStmt(const While* whileStmt){
     while (IsTruthy(Evaluate(whileStmt->condition))) {
         Execute(whileStmt->body);
     } 
+}
+
+void Interpreter::VisitFunctionStmt(const Function* functionStmt){
+    LoxFunction* function = new LoxFunction(const_cast<Function*>(functionStmt));
+    environment->Define(functionStmt->name.lexeme, (LoxCallable*)function);
 }
 
 void Interpreter::VisitBlockStmt(const Block* blockStmt) {

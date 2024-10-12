@@ -11,6 +11,7 @@ class Interpreter : ExprVisitor<std::any>, StmtVisitor<void>{
 public:
 	Interpreter();
 	void Interpret(const std::vector<Stmt*>& stmts);
+	void ExecuteBlock(const std::vector<Stmt*> stmts, Environment* environment);
 private:
 	std::any VisitLiteral(const Literal* literalExpr) override;
 	std::any VisitUnary(const Unary* unaryExpr) override;
@@ -34,10 +35,10 @@ private:
 	void VisitBlockStmt(const Block* blockStmt)  override;
 	void VisitIfStmt(const If* ifStmt) override;
 	void VisitWhileStmt(const While* whileStmt) override;
+	void VisitFunctionStmt(const Function* functionStmt) override;
 
 	void Execute(const Stmt* stmt);
-	void ExecuteBlock(const std::vector<Stmt*> stmts, Environment* environment) ;
-private:
+public:
 	Environment* globals = nullptr;
 	Environment* environment = nullptr;
 };
