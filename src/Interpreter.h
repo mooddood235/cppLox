@@ -39,8 +39,8 @@ private:
 
 	void Execute(const Stmt* stmt);
 public:
-	Environment* globals = nullptr;
-	Environment* environment = nullptr;
+	Environment* globals = new Environment();
+	Environment* environment = globals;
 };
 struct RuntimeError {
 public:
