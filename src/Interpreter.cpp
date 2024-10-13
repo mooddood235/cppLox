@@ -172,14 +172,12 @@ void Interpreter::ExecuteBlock(const std::vector<Stmt*> stmts, Environment* envi
     Environment* previous = this->environment;
     try {
         this->environment = environment;
-        //std::cout << "Execute: " << previous << ", " << this->environment << std::endl;
         for (const Stmt* stmt : stmts) Execute(stmt);
     }
     catch (std::runtime_error e){
         std::cerr << "Error in ExecuteBlock(): " << e.what() << std::endl;
     }
     this->environment = previous;
-    //std::cout << "Restore: " << this->environment << std::endl;
 }
 
 std::any Interpreter::VisitCall(const Call* callExpr){
