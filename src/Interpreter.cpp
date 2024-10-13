@@ -228,6 +228,12 @@ void Interpreter::VisitFunctionStmt(const Function* functionStmt){
     environment->Define(functionStmt->name.lexeme, (LoxCallable*)function);
 }
 
+void Interpreter::VisitReturnStmt(const Return* returnStmt){
+    std::any value = std::any();
+    if (returnStmt) value = Evaluate(returnStmt->value);
+    throw ReturnException(value);
+}
+
 void Interpreter::VisitBlockStmt(const Block* blockStmt) {
     ExecuteBlock(blockStmt->stmts, new Environment(environment));
 }
@@ -235,4 +241,8 @@ void Interpreter::VisitBlockStmt(const Block* blockStmt) {
 RuntimeError::RuntimeError(const Token& token, const std::string& message){
     this->token = token;
     this->message = message;
+}
+
+ReturnException::ReturnException(const std::any& value){
+    this->value = value;
 }

@@ -64,3 +64,10 @@ struct Function : Stmt {
 	std::vector<Stmt*> body;
 	~Function();
 };
+struct Return : Stmt {
+	Return(const Token& keyword, Expr* value);
+	void Accept(StmtVisitor<void>* visitor) const override;
+	Token keyword;
+	Expr* value;
+	~Return();
+};

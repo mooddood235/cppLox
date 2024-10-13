@@ -37,6 +37,7 @@ Stmt* Parser::Decleration(){
 Stmt* Parser::Statement(){
 	if (Match({ IF })) return IfStatement();
 	if (Match({ PRINT })) return PrintStatement();
+	if (Match({ RETURN })) return ReturnStatement();
 	if (Match({ WHILE })) return WhileStatement();
 	if (Match({ FOR })) return ForStatement();
 	if (Match({ LEFT_BRACE })) return new Block(ParseBlock());
@@ -100,6 +101,13 @@ Stmt* Parser::ForStatement(){
 	if (initializer) body = new Block({ initializer, body });
 
 	return body;
+}
+Stmt* Parser::ReturnStatement(){
+	Token keyword = Previous();
+	Expr* value = nullptr;
+	if (!Check(SEMICOLON)) value = Expression();
+	Consume(SEMICOLON, "Excpect ';' after return value.");
+	return new Return(keyword, value);
 }
 Function* Parser::ParseFunction(const std::string& kind){
 	Token name = Consume(IDENTIFIER, std::format("Expect {} name.", kind));

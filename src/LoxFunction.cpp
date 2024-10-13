@@ -11,7 +11,12 @@ std::any LoxFunction::Call(Interpreter* interpreter, const std::vector<std::any>
 	for (int i = 0; i < decleration->params.size(); i++) {
 		environment->Define(decleration->params[i].lexeme, arguments[i]);
 	}
-	interpreter->ExecuteBlock(decleration->body, environment);
+	try {
+		interpreter->ExecuteBlock(decleration->body, environment);
+	}
+	catch (const ReturnException& e) {
+		return e.value;
+	}
 	return std::any();
 }
 int LoxFunction::Arity() {

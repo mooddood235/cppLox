@@ -36,6 +36,7 @@ private:
 	void VisitIfStmt(const If* ifStmt) override;
 	void VisitWhileStmt(const While* whileStmt) override;
 	void VisitFunctionStmt(const Function* functionStmt) override;
+	void VisitReturnStmt(const Return* returnStmt) override;
 
 	void Execute(const Stmt* stmt);
 public:
@@ -47,5 +48,9 @@ public:
 	RuntimeError(const Token& token, const std::string& message);
 	Token token;
 	std::string message;
+};
+struct ReturnException {
+	ReturnException(const std::any& value);
+	std::any value;
 };
 

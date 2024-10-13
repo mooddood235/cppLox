@@ -93,3 +93,14 @@ void Function::Accept(StmtVisitor<void>* visitor) const{
 Function::~Function(){
 	for (const Stmt* stmt : body) delete stmt;
 }
+
+Return::Return(const Token& keyword, Expr* value){
+	this->keyword = keyword;
+	this->value = value;
+}
+void Return::Accept(StmtVisitor<void>* visitor) const{
+	visitor->VisitReturnStmt(this);
+}
+Return::~Return() {
+	delete value;
+}
