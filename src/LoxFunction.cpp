@@ -1,12 +1,13 @@
 #include "LoxFunction.h"
 #include "Environment.h"
 
-LoxFunction::LoxFunction(Function* decleration){
+LoxFunction::LoxFunction(Function* decleration, Environment* closure){
+	this->closure = closure;
 	this->decleration = decleration;
 }
 
 std::any LoxFunction::Call(Interpreter* interpreter, const std::vector<std::any>& arguments){
-	Environment* environment = new Environment(interpreter->globals);
+	Environment* environment = new Environment(closure);
 
 	for (int i = 0; i < decleration->params.size(); i++) {
 		environment->Define(decleration->params[i].lexeme, arguments[i]);

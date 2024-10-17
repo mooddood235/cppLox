@@ -224,7 +224,9 @@ void Interpreter::VisitWhileStmt(const While* whileStmt){
 }
 
 void Interpreter::VisitFunctionStmt(const Function* functionStmt){
-    LoxFunction* function = new LoxFunction(const_cast<Function*>(functionStmt));
+    LoxFunction* function = new LoxFunction(
+        const_cast<Function*>(functionStmt),
+        environment);
     environment->Define(functionStmt->name.lexeme, (LoxCallable*)function);
 }
 

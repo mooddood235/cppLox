@@ -1,5 +1,5 @@
 ﻿  LoxFunction.cpp
-C:\Users\qumah\Desktop\cppLox\src\LoxFunction.cpp(25,33): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\qumah\Desktop\cppLox\src\LoxFunction.cpp(26,33): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
   ClockNative.cpp
   Environment.cpp
   Interpreter.cpp
@@ -14,6 +14,6 @@ C:\Users\qumah\Desktop\cppLox\src\Parser.cpp(32,20): warning C4101: 'error': unr
   Stmt.cpp
   Generating code
   Previous IPDB was built with incompatible compiler, fall back to full compilation.
-  All 2010 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 2005 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   cppLox.vcxproj -> C:\Users\qumah\Desktop\cppLox\x64\Release\cppLox.exe
