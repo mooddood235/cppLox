@@ -5,6 +5,7 @@ C:\Users\qumah\Desktop\cppLox\src\Interpreter.cpp;C:\Users\qumah\Desktop\cppLox\
 C:\Users\qumah\Desktop\cppLox\src\LoxCallable.cpp;C:\Users\qumah\Desktop\cppLox\cppLox\x64\Release\LoxCallable.obj
 C:\Users\qumah\Desktop\cppLox\src\Parser.cpp;C:\Users\qumah\Desktop\cppLox\cppLox\x64\Release\Parser.obj
 C:\Users\qumah\Desktop\cppLox\src\Expr.cpp;C:\Users\qumah\Desktop\cppLox\cppLox\x64\Release\Expr.obj
+C:\Users\qumah\Desktop\cppLox\src\Resolver.cpp;C:\Users\qumah\Desktop\cppLox\cppLox\x64\Release\Resolver.obj
 C:\Users\qumah\Desktop\cppLox\src\Scanner.cpp;C:\Users\qumah\Desktop\cppLox\cppLox\x64\Release\Scanner.obj
 C:\Users\qumah\Desktop\cppLox\src\cppLox.cpp;C:\Users\qumah\Desktop\cppLox\cppLox\x64\Release\cppLox.obj
 C:\Users\qumah\Desktop\cppLox\src\Token.cpp;C:\Users\qumah\Desktop\cppLox\cppLox\x64\Release\Token.obj

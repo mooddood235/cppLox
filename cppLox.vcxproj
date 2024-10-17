@@ -135,6 +135,7 @@
     <ClCompile Include="src\LoxCallable.cpp" />
     <ClCompile Include="src\Parser.cpp" />
     <ClCompile Include="src\Expr.cpp" />
+    <ClCompile Include="src\Resolver.cpp" />
     <ClCompile Include="src\Scanner.cpp" />
     <ClCompile Include="src\cppLox.cpp" />
     <ClCompile Include="src\Token.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="src\ClockNative.h" />
     <ClInclude Include="src\Environment.h" />
     <ClInclude Include="src\LoxCallable.h" />
+    <ClInclude Include="src\Resolver.h" />
     <ClInclude Include="src\StmtVisitor.h" />
     <ClInclude Include="src\Interpreter.h" />
     <ClInclude Include="src\Parser.h" />
