@@ -92,7 +92,8 @@ std::any Interpreter::VisitGrouping(const Grouping* groupingExpr) {
 }
 
 std::any Interpreter::VisitVariable(const Variable* variableExpr) {
-    return environment->Get(variableExpr->name);
+    //return environment->Get(variableExpr->name);
+    return LookUpVariable(variableExpr->name, variableExpr);
 }
 
 std::any Interpreter::VisitAssign(const Assign* assignExpr) {
@@ -166,6 +167,15 @@ void Interpreter::VisitVarStmt(const Var* varStmt) {
 
 void Interpreter::Execute(const Stmt* stmt) {
     stmt->Accept(this);
+}
+
+std::any Interpreter::LookUpVariable(const Token& name, const Expr* expr){
+    auto it = locals.find(expr);
+    if (it != locals.end())
+        return environment->GetAt(it->second, name.lexeme);
+    else
+        return globals->Get(name);
+
 }
 
 void Interpreter::ExecuteBlock(const std::vector<Stmt*> stmts, Environment* environment) {

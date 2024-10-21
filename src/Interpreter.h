@@ -40,6 +40,7 @@ private:
 	void VisitReturnStmt(const Return* returnStmt) override;
 
 	void Execute(const Stmt* stmt);
+	std::any LookUpVariable(const Token& name, const Expr* expr);
 public:
 	Environment* globals = new Environment();
 	Environment* environment = globals;

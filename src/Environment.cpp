@@ -30,3 +30,16 @@ std::any Environment::Get(const Token& name) const{
 	if (enclosing) return enclosing->Get(name);
 	throw RuntimeError(name, "Undefined variable '" + name.lexeme + "'.");
 }
+
+std::any Environment::GetAt(int distance, const std::string& name){
+	return Ancestor(distance)->values.at(name);
+}
+
+const Environment* Environment::Ancestor(int distance) const{
+	const Environment* environment = this;
+
+	for (int i = 0; i < distance; i++)
+		environment = environment->enclosing;
+
+	return environment;
+}

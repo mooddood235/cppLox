@@ -11,6 +11,9 @@ public:
 	void Define(const std::string& name, const std::any& value);
 	void Assign(const Token& name, const std::any& value);
 	std::any Get(const Token& name) const;
+	std::any GetAt(int distance, const std::string& name);
+private:
+	const Environment* Ancestor(int distance) const;
 private:
 	Environment* enclosing;
 	std::unordered_map<std::string, std::any> values =
