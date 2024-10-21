@@ -1,5 +1,6 @@
 #include "Resolver.h"
 #include "cppLox.h"
+#include <iostream>
 
 Resolver::Resolver(Interpreter* interpreter){
 	this->interpreter = interpreter;
@@ -82,13 +83,13 @@ std::any Resolver::VisitGrouping(const Grouping* groupingExpr){
 }
 
 std::any Resolver::VisitVariable(const Variable* variableExpr){
+
 	if (!scopes.empty()) {
 		std::unordered_map<std::string, bool>* topScope = scopes.top();
 		auto it = topScope->find(variableExpr->name.lexeme);
 		if (it != topScope->end() && it->second == false) {
 			Error(variableExpr->name, "Can't read local variable in its own initializer");
 		}
-		return std::any();
 	}
 	ResolveLocal(variableExpr, variableExpr->name);
 	return std::any();
