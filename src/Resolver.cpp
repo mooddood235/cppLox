@@ -49,7 +49,7 @@ void Resolver::Define(const Token& name){
 void Resolver::ResolveLocal(const Expr* expr, const Token& name){
 	for (int i = scopes.size() - 1; i >= 0; i--) {
 		if (scopes._Get_container()[i]->contains(name.lexeme)) {
-			interpreter.Resolve(expr, scopes.size() - 1 - i);
+			interpreter->Resolve(expr, scopes.size() - 1 - i);
 			return;
 		}
 	}

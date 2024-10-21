@@ -180,6 +180,10 @@ void Interpreter::ExecuteBlock(const std::vector<Stmt*> stmts, Environment* envi
     this->environment = previous;
 }
 
+void Interpreter::Resolve(const Expr* expr, int depth){
+    locals.emplace(expr, depth);
+}
+
 std::any Interpreter::VisitCall(const Call* callExpr){
     std::any callee = Evaluate(callExpr->callee);
 

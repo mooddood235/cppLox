@@ -12,6 +12,7 @@ public:
 	Interpreter();
 	void Interpret(const std::vector<Stmt*>& stmts);
 	void ExecuteBlock(const std::vector<Stmt*> stmts, Environment* environment);
+	void Resolve(const Expr* expr, int depth);
 private:
 	std::any VisitLiteral(const Literal* literalExpr) override;
 	std::any VisitUnary(const Unary* unaryExpr) override;
@@ -42,6 +43,8 @@ private:
 public:
 	Environment* globals = new Environment();
 	Environment* environment = globals;
+private:
+	std::unordered_map<const Expr*, int> locals;
 };
 struct RuntimeError {
 public:
