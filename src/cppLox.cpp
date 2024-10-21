@@ -8,6 +8,7 @@
 #include "Parser.h"
 #include "Expr.h"
 #include "Stmt.h"
+#include "Resolver.h"
 
 void RunFile(const std::string& path);
 void RunPrompt();
@@ -60,6 +61,10 @@ void Run(const std::string& source) {
     std::vector<Stmt*> stmts = parser.Parse();
 
     if (hadError) return;
+
+    Resolver resolver(&interpreter);
+    resolver.Resolve(stmts);
+
     interpreter.Interpret(stmts);
 }
 void Error(int line, const std::string& message) {

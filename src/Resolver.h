@@ -9,8 +9,8 @@
 class Resolver : ExprVisitor<std::any>, StmtVisitor<void>{
 public:
 	Resolver(Interpreter* interpreter);
-private:
 	void Resolve(const std::vector<Stmt*> statements);
+private:
 	void Resolve(const Stmt* stmt);
 	void Resolve(const Expr* expr);
 	void ResolveFunction(const Function* functionStmt);
