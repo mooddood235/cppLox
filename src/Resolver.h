@@ -7,13 +7,18 @@
 #include "Interpreter.h"
 
 class Resolver : ExprVisitor<std::any>, StmtVisitor<void>{
+private:
+	enum class FunctionType {
+		NONE,
+		FUNCTION
+	};
 public:
 	Resolver(Interpreter* interpreter);
 	void Resolve(const std::vector<Stmt*> statements);
 private:
 	void Resolve(const Stmt* stmt);
 	void Resolve(const Expr* expr);
-	void ResolveFunction(const Function* functionStmt);
+	void ResolveFunction(const Function* functionStmt, FunctionType type);
 	void BeginScope();
 	void EndScope();
 	void Declare(const Token& name);
@@ -42,5 +47,6 @@ private:
 private:
 	Interpreter* interpreter;
 	std::stack<std::unordered_map<std::string, bool>*> scopes;
+	FunctionType currentFunction = FunctionType::NONE;
 };
 

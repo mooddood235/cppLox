@@ -17,7 +17,9 @@ void Resolver::Resolve(const Expr* expr){
 	expr->Accept(this);
 }
 
-void Resolver::ResolveFunction(const Function* functionStmt){
+void Resolver::ResolveFunction(const Function* functionStmt, FunctionType type){
+	FunctionType enclosingFunction = currentFunction;
+	currentFunction = type;
 	BeginScope();
 	for (const Token& param : functionStmt->params) {
 		Declare(param);
@@ -25,6 +27,7 @@ void Resolver::ResolveFunction(const Function* functionStmt){
 	}
 	Resolve(functionStmt->body);
 	EndScope();
+	currentFunction = enclosingFunction;
 }
 
 void Resolver::BeginScope(){
@@ -38,6 +41,9 @@ void Resolver::EndScope(){
 void Resolver::Declare(const Token& name){
 	if (scopes.empty()) return;
 	std::unordered_map<std::string, bool>* scope = scopes.top();
+	if (scope->contains(name.lexeme)) {
+		Error(name, "Already a variable with this name in this scope.");
+	}
 	(*scope)[name.lexeme] = false;
 }
 
@@ -55,41 +61,51 @@ void Resolver::ResolveLocal(const Expr* expr, const Token& name){
 	}
 }
 
-std::any Resolver::VisitLiteral(const Literal* literalExpr){}
+std::any Resolver::VisitLiteral(const Literal* literalExpr){
+	return std::any();
+}
 
 std::any Resolver::VisitUnary(const Unary* unaryExpr){
 	Resolve(unaryExpr->right);
+	return std::any();
 }
 
 std::any Resolver::VisitBinary(const Binary* binaryExpr){
 	Resolve(binaryExpr->left);
 	Resolve(binaryExpr->right);
+	return std::any();
 }
 
 std::any Resolver::VisitGrouping(const Grouping* groupingExpr){
 	Resolve(groupingExpr->expr);
+	return std::any();
 }
 
 std::any Resolver::VisitVariable(const Variable* variableExpr){
 	if (!scopes.empty() && !scopes.top()->at(variableExpr->name.lexeme)) {
 		Error(variableExpr->name, "Can't read local variable in its own initializer");
+		return std::any();
 	}
 	ResolveLocal(variableExpr, variableExpr->name);
+	return std::any();
 }
 
 std::any Resolver::VisitAssign(const Assign* assignExpr){
 	Resolve(assignExpr->value);
 	ResolveLocal(assignExpr, assignExpr->name);
+	return std::any();
 }
 
 std::any Resolver::VisitLogical(const Logical* logicalExpr){
 	Resolve(logicalExpr->left);
 	Resolve(logicalExpr->right);
+	return std::any();
 }
 
 std::any Resolver::VisitCall(const Call* callExpr){
 	Resolve(callExpr->callee);
 	for (const Expr* arg : callExpr->arguments) Resolve(arg);
+	return std::any();
 }
 
 void Resolver::VisitExprStmt(const ExprStmt* exprStmt){
@@ -126,9 +142,11 @@ void Resolver::VisitWhileStmt(const While* whileStmt){
 void Resolver::VisitFunctionStmt(const Function* functionStmt){
 	Declare(functionStmt->name);
 	Define(functionStmt->name);
-	ResolveFunction(functionStmt);
+	ResolveFunction(functionStmt, FunctionType::FUNCTION);
 }
 
 void Resolver::VisitReturnStmt(const Return* returnStmt){
+	if (currentFunction == FunctionType::NONE)
+		Error(returnStmt->keyword, "Can't return from top-level code.");
 	if (returnStmt->value) Resolve(returnStmt->value);
 }

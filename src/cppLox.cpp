@@ -65,6 +65,8 @@ void Run(const std::string& source) {
     Resolver resolver(&interpreter);
     resolver.Resolve(stmts);
 
+    if (hadError) return;
+
     interpreter.Interpret(stmts);
 }
 void Error(int line, const std::string& message) {
