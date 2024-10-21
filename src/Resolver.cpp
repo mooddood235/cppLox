@@ -31,7 +31,7 @@ void Resolver::ResolveFunction(const Function* functionStmt, FunctionType type){
 }
 
 void Resolver::BeginScope(){
-	scopes.emplace();
+	scopes.push(new std::unordered_map<std::string, bool>());
 }
 
 void Resolver::EndScope(){
