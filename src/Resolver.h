@@ -13,6 +13,7 @@ private:
 	void Resolve(const std::vector<Stmt*> statements);
 	void Resolve(const Stmt* stmt);
 	void Resolve(const Expr* expr);
+	void ResolveFunction(const Function* functionStmt);
 	void BeginScope();
 	void EndScope();
 	void Declare(const Token& name);

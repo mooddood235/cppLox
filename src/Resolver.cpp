@@ -17,6 +17,16 @@ void Resolver::Resolve(const Expr* expr){
 	expr->Accept(this);
 }
 
+void Resolver::ResolveFunction(const Function* functionStmt){
+	BeginScope();
+	for (const Token& param : functionStmt->params) {
+		Declare(param);
+		Define(param);
+	}
+	Resolve(functionStmt->body);
+	EndScope();
+}
+
 void Resolver::BeginScope(){
 	scopes.emplace();
 }
@@ -45,56 +55,49 @@ void Resolver::ResolveLocal(const Expr* expr, const Token& name){
 	}
 }
 
-void Resolver::VisitLiteral(const Literal* literalExpr)
-{
-	
+std::any Resolver::VisitLiteral(const Literal* literalExpr){}
+
+std::any Resolver::VisitUnary(const Unary* unaryExpr){
+	Resolve(unaryExpr->right);
 }
 
-void Resolver::VisitUnary(const Unary* unaryExpr)
-{
-	
+std::any Resolver::VisitBinary(const Binary* binaryExpr){
+	Resolve(binaryExpr->left);
+	Resolve(binaryExpr->right);
 }
 
-void Resolver::VisitBinary(const Binary* binaryExpr)
-{
-	
+std::any Resolver::VisitGrouping(const Grouping* groupingExpr){
+	Resolve(groupingExpr->expr);
 }
 
-void Resolver::VisitGrouping(const Grouping* groupingExpr)
-{
-	
-}
-
-void Resolver::VisitVariable(const Variable* variableExpr){
+std::any Resolver::VisitVariable(const Variable* variableExpr){
 	if (!scopes.empty() && !scopes.top()->at(variableExpr->name.lexeme)) {
 		Error(variableExpr->name, "Can't read local variable in its own initializer");
 	}
 	ResolveLocal(variableExpr, variableExpr->name);
 }
 
-void Resolver::VisitAssign(const Assign* assignExpr)
-{
-	
+std::any Resolver::VisitAssign(const Assign* assignExpr){
+	Resolve(assignExpr->value);
+	ResolveLocal(assignExpr, assignExpr->name);
 }
 
-void Resolver::VisitLogical(const Logical* logicalExpr)
-{
-	
+std::any Resolver::VisitLogical(const Logical* logicalExpr){
+	Resolve(logicalExpr->left);
+	Resolve(logicalExpr->right);
 }
 
-void Resolver::VisitCall(const Call* callExpr)
-{
-	
+std::any Resolver::VisitCall(const Call* callExpr){
+	Resolve(callExpr->callee);
+	for (const Expr* arg : callExpr->arguments) Resolve(arg);
 }
 
-void Resolver::VisitExprStmt(const ExprStmt* exprStmt)
-{
-	
+void Resolver::VisitExprStmt(const ExprStmt* exprStmt){
+	Resolve(exprStmt->expr);
 }
 
-void Resolver::VisitPrintStmt(const Print* printStmt)
-{
-	
+void Resolver::VisitPrintStmt(const Print* printStmt){
+	Resolve(printStmt->expr);
 }
 
 void Resolver::VisitVarStmt(const Var* varStmt){
@@ -109,22 +112,23 @@ void Resolver::VisitBlockStmt(const Block* blockStmt){
 	EndScope();
 }
 
-void Resolver::VisitIfStmt(const If* ifStmt)
-{
-	
+void Resolver::VisitIfStmt(const If* ifStmt){
+	Resolve(ifStmt->conditional);
+	Resolve(ifStmt->thenBranch);
+	if (ifStmt->elseBranch) Resolve(ifStmt->elseBranch);
 }
 
-void Resolver::VisitWhileStmt(const While* whileStmt)
-{
-	
+void Resolver::VisitWhileStmt(const While* whileStmt){
+	Resolve(whileStmt->condition);
+	Resolve(whileStmt->body);
 }
 
-void Resolver::VisitFunctionStmt(const Function* functionStmt)
-{
-	
+void Resolver::VisitFunctionStmt(const Function* functionStmt){
+	Declare(functionStmt->name);
+	Define(functionStmt->name);
+	ResolveFunction(functionStmt);
 }
 
-void Resolver::VisitReturnStmt(const Return* returnStmt)
-{
-	
+void Resolver::VisitReturnStmt(const Return* returnStmt){
+	if (returnStmt->value) Resolve(returnStmt->value);
 }
