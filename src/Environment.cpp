@@ -35,8 +35,12 @@ std::any Environment::GetAt(int distance, const std::string& name){
 	return Ancestor(distance)->values.at(name);
 }
 
-const Environment* Environment::Ancestor(int distance) const{
-	const Environment* environment = this;
+void Environment::AssignAt(int distance, const Token& name, const std::any& value){
+	Ancestor(distance)->values.emplace(name.lexeme, value);
+}
+
+Environment* Environment::Ancestor(int distance){
+	Environment* environment = this;
 
 	for (int i = 0; i < distance; i++)
 		environment = environment->enclosing;

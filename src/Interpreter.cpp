@@ -92,13 +92,18 @@ std::any Interpreter::VisitGrouping(const Grouping* groupingExpr) {
 }
 
 std::any Interpreter::VisitVariable(const Variable* variableExpr) {
-    //return environment->Get(variableExpr->name);
     return LookUpVariable(variableExpr->name, variableExpr);
 }
 
 std::any Interpreter::VisitAssign(const Assign* assignExpr) {
     std::any value = Evaluate(assignExpr->value);
-    environment->Assign(assignExpr->name, value);
+    
+    auto it = locals.find(assignExpr);
+    if (it != locals.end())
+        environment->AssignAt(it->second, assignExpr->name, value);
+    else
+        globals->Assign(assignExpr->name, value);
+
     return value;
 }
 
