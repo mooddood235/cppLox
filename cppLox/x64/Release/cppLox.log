@@ -1,7 +1,11 @@
-﻿  cppLox.cpp
+﻿  Interpreter.cpp
+  Resolver.cpp
+  cppLox.cpp
+C:\Users\qumah\Desktop\cppLox\src\Resolver.cpp(56,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\qumah\Desktop\cppLox\src\Resolver.cpp(58,49): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   Generating code
-  5 of 2429 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    6 functions had inline decision re-evaluated but remain unchanged
+  22 of 2443 functions ( 0.9%) were compiled, the rest were copied from previous compilation.
+    15 functions were new in current compilation
+    28 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   cppLox.vcxproj -> C:\Users\qumah\Desktop\cppLox\x64\Release\cppLox.exe
