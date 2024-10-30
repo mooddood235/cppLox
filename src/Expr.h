@@ -81,3 +81,10 @@ struct Call : Expr {
 	std::vector<Expr*> arguments;
 	~Call();
 };
+struct Get : Expr {
+	Get(Expr* object, const Token& name);
+	std::any Accept(ExprVisitor<std::any>* visitor) const override;
+	Expr* object;
+	Token name;
+	~Get();
+};

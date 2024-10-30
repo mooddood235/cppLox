@@ -267,6 +267,10 @@ Expr* Parser::ParseCall(){
 
 	while (true) {
 		if (Match({ LEFT_PAREN })) expr = FinishCall(expr);
+		else if (Match({ DOT })) {
+			Token name = Consume(IDENTIFIER, "Expect property name after '.'.");
+			expr = new Get(expr, name);
+		}
 		else break;
 	}
 	return expr;

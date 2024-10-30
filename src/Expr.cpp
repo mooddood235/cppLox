@@ -108,3 +108,16 @@ Call::~Call() {
 	delete callee;
 	for (const Expr* arg : arguments) delete arg;
 }
+
+Get::Get(Expr* object, const Token& name){
+	this->object = object;
+	this->name = name;
+}
+
+std::any Get::Accept(ExprVisitor<std::any>* visitor) const{
+	return visitor->VisitGet(this);
+}
+
+Get::~Get(){
+	delete object;
+}
