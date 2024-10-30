@@ -10,6 +10,7 @@ public:
 	std::vector<Stmt*> Parse();
 private:
 	Stmt* VarDecleration();
+	Stmt* ClassDecleration();
 	Stmt* Decleration();
 	Stmt* Statement();
 	Stmt* PrintStatement();

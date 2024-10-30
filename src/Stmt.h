@@ -71,3 +71,10 @@ struct Return : Stmt {
 	Expr* value;
 	~Return();
 };
+struct Class : Stmt {
+	Class(const Token& name, const std::vector<Function*>& methods);
+	void Accept(StmtVisitor<void>* visitor) const override;
+	Token name;
+	std::vector<Function*> methods;
+	~Class();
+};

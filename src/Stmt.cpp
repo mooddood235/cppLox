@@ -104,3 +104,14 @@ void Return::Accept(StmtVisitor<void>* visitor) const{
 Return::~Return() {
 	delete value;
 }
+
+Class::Class(const Token& name, const std::vector<Function*>& methods){
+	this->name = name;
+	this->methods = methods;
+}
+void Class::Accept(StmtVisitor<void>* visitor) const{
+	visitor->AcceptClassStmt(this);
+}
+Class::~Class() {
+	for (const Function* func : methods) delete func;
+}

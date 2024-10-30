@@ -22,8 +22,20 @@ Stmt* Parser::VarDecleration(){
 	Consume(SEMICOLON, "Expect ';' after variable decleration.");
 	return new Var(name, initializer);
 }
+Stmt* Parser::ClassDecleration(){
+	Token name = Consume(IDENTIFIER, "Expect class name.");
+	Consume(LEFT_BRACE, "Expect '{' before class body.");
+	
+	std::vector<Function*> methods = std::vector<Function*>();
+	while (!Check(RIGHT_BRACE) && !IsAtEnd())
+		methods.push_back(ParseFunction("method"));
+	
+	Consume(RIGHT_BRACE, "Expect '}' after class body.");
+	return new Class(name, methods);
+}
 Stmt* Parser::Decleration(){
 	try {
+		if (Match({ CLASS })) return ClassDecleration();
 		if (Match({ FUN })) return ParseFunction("function");
 		if (Match({ VAR })) return VarDecleration();
 		if (Match({ LEFT_BRACE })) return new Block(ParseBlock());
