@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\LoxInstance.cpp" />
     <ClCompile Include="src\LoxClass.cpp" />
     <ClCompile Include="src\LoxFunction.cpp" />
     <ClCompile Include="src\ClockNative.cpp" />
@@ -144,6 +145,7 @@
     <ClCompile Include="src\Stmt.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\LoxInstance.h" />
     <ClInclude Include="src\LoxClass.h" />
     <ClInclude Include="src\LoxFunction.h" />
     <ClInclude Include="src\ClockNative.h" />

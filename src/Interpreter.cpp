@@ -258,7 +258,7 @@ void Interpreter::VisitReturnStmt(const Return* returnStmt){
 
 void Interpreter::VisitClassStmt(const Class* classStmt){
     environment->Define(classStmt->name.lexeme, std::any());
-    LoxClass* klass = new LoxClass(classStmt->name.lexeme);
+    LoxCallable* klass = new LoxClass(classStmt->name.lexeme);
     environment->Assign(classStmt->name, klass);
 }
 

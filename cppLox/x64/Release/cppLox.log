@@ -1,7 +1,7 @@
 ﻿  Interpreter.cpp
   Generating code
-  6 of 2518 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    122 functions had inline decision re-evaluated but remain unchanged
+  12 of 2526 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+    5 functions were new in current compilation
+    7 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   cppLox.vcxproj -> C:\Users\qumah\Desktop\cppLox\x64\Release\cppLox.exe
