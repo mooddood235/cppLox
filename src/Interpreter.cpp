@@ -6,6 +6,7 @@
 #include "cppLox.h"
 #include "ClockNative.h"
 #include "LoxFunction.h"
+#include "LoxClass.h"
 
 class LoxCallable;
 
@@ -253,6 +254,12 @@ void Interpreter::VisitReturnStmt(const Return* returnStmt){
     std::any value = std::any();
     if (returnStmt) value = Evaluate(returnStmt->value);
     throw ReturnException(value);
+}
+
+void Interpreter::VisitClassStmt(const Class* classStmt){
+    environment->Define(classStmt->name.lexeme, std::any());
+    LoxClass* klass = new LoxClass(classStmt->name.lexeme);
+    environment->Assign(classStmt->name, klass);
 }
 
 void Interpreter::VisitBlockStmt(const Block* blockStmt) {

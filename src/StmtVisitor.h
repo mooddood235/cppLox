@@ -8,6 +8,7 @@ struct If;
 struct While;
 struct Function;
 struct Return;
+struct Class;
 
 template <typename T>
 class StmtVisitor {
@@ -20,4 +21,5 @@ public:
 	virtual T VisitWhileStmt(const While* whileStmt) = 0;
 	virtual T VisitFunctionStmt(const Function* functionStmt) = 0;
 	virtual T VisitReturnStmt(const Return* returnStmt) = 0;
+	virtual T VisitClassStmt(const Class* classStmt) = 0;
 };

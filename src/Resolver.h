@@ -44,6 +44,7 @@ private:
 	void VisitWhileStmt(const While* whileStmt) override;
 	void VisitFunctionStmt(const Function* functionStmt) override;
 	void VisitReturnStmt(const Return* returnStmt) override;
+	void VisitClassStmt(const Class* classStmt) override;
 private:
 	Interpreter* interpreter;
 	std::stack<std::unordered_map<std::string, bool>*> scopes;

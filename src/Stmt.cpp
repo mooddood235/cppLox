@@ -110,7 +110,7 @@ Class::Class(const Token& name, const std::vector<Function*>& methods){
 	this->methods = methods;
 }
 void Class::Accept(StmtVisitor<void>* visitor) const{
-	visitor->AcceptClassStmt(this);
+	visitor->VisitClassStmt(this);
 }
 Class::~Class() {
 	for (const Function* func : methods) delete func;

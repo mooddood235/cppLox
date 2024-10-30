@@ -155,3 +155,8 @@ void Resolver::VisitReturnStmt(const Return* returnStmt){
 		Error(returnStmt->keyword, "Can't return from top-level code.");
 	if (returnStmt->value) Resolve(returnStmt->value);
 }
+
+void Resolver::VisitClassStmt(const Class* classStmt){
+	Declare(classStmt->name);
+	Define(classStmt->name);
+}

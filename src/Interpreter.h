@@ -38,6 +38,7 @@ private:
 	void VisitWhileStmt(const While* whileStmt) override;
 	void VisitFunctionStmt(const Function* functionStmt) override;
 	void VisitReturnStmt(const Return* returnStmt) override;
+	void VisitClassStmt(const Class* classStmt) override;
 
 	void Execute(const Stmt* stmt);
 	std::any LookUpVariable(const Token& name, const Expr* expr);
