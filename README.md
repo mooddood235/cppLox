@@ -11,10 +11,6 @@ C++ implementation of the Lox language described in the book [Crafting Interpret
   - Conditionals
   - For Loops
   - While Loops
-- Classes
-  - Inheritance
-  - Polymorphism
-  - Methods
 
 ## Implementation
 - Recursive Descent Parser
