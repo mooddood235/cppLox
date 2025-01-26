@@ -1,6 +1,7 @@
 # cppLox
 
 C++ implementation of the Lox language described in the book [Crafting Interpreters](https://craftinginterpreters.com/) by Robert Nystrom. 
+The C implementation of Lox is being developed [here](https://github.com/mooddood235/clox).
 
 ## Features
 - Dynamic Typing
